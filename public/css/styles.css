@@ -1,0 +1,8 @@
+.dataTables_filter label {
+   float:right
+}
+
+.pagination {
+   margin-top:0;
+   float:right;
+}

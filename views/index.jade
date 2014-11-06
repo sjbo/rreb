@@ -1,0 +1,50 @@
+include bslayout.jade
+//include tables.html
+div(class="container-fluid")
+  h3= tabletitle
+  form(action="/completeclaim", method="post")
+   table#example(class="table table-striped table-bordered",cellspacing="0",width="100%")
+      thead
+        tr
+         th Current Status
+         // th Claim Type
+         th Brand
+         th Item ID
+         th Serial No
+         th Date
+         th Complete
+      tfoot
+        tr
+         th Current Status
+         // th Claim Type
+         th Brand
+         th Item ID
+         th Serial No
+         th Date
+         th Complete
+      tbody
+       each task in tasks
+        tr
+         td #{task.requestStatus}
+         // td #{task.claimType}
+         td #{task.itemBrand}
+         td #{task.itemID}
+         td #{task.serialNo}
+         - var day   = task.requestTimestamp.getDate();
+         - var month = task.requestTimestamp.getMonth() + 1;
+         - var year  = task.requestTimestamp.getFullYear();
+         td #{month + "/" + day + "/" + year}
+         td #{task.requestCompleted}
+           input(type="hidden", name="#{task._id}", value="#{!task.requestCompleted}", checked=task.requestCompleted)
+      input(type="hidden", value="Update tasks")
+  form(action="/addclaim", method="post")
+         p Item ID: 
+           input(name="itemID", type="textbox")
+         p Item Serial:
+           input(name="serialNo", type="textbox")
+         p Claim Type:
+          select#select2.form-control (name="claimType")
+            - var claimTypes = ["Manufacturer RA","Damage Scrap","Damage Concession","Damage Return","Good Return","Damage Concession","Damage Refused - Freight Claim","Lost in Transit","Push/Pull Request","PDI"]
+            for type in claimTypes
+             option(value='#{type}') #{type}
+         input(type="submit", value="Add item")
